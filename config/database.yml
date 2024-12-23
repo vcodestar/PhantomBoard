@@ -81,18 +81,4 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: anonymous_board_app_production
-    username: anonymous_board_app
-    password: <%= ENV["ANONYMOUS_BOARD_APP_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: anonymous_board_app_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: anonymous_board_app_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: anonymous_board_app_production_cable
-    migrations_paths: db/cable_migrate
+    url <%= ENV['DATABASE_URL'] %>
