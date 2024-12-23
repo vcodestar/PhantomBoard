@@ -1,0 +1,46 @@
+<div id="login-wrapper">
+
+  <%= image_tag('logo-cap.png', alt: 'GhostPost Logo', class: 'logo-class', id: "logo-on-page") %>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <h2>Log in</h2>
+
+    <!-- Username Field -->
+    <div id="password-container">
+      <i class="fas fa-user"></i>
+      <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "Enter your username", id: "username-field" %>
+    </div>
+
+    <!-- Hidden Email Field -->
+    <%= f.hidden_field :email, id: "email-field" %>
+
+    <!-- Password Field -->
+    <div id="password-container">
+      <i class="fas fa-lock"></i>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter password" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="actions">
+      <%= f.submit "Log in", class: "btn btn-outline-primary", id: "login-user-btn" %>
+    </div>
+
+    <div id="shared-links">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const usernameField = document.getElementById("username-field");
+    const emailField = document.getElementById("email-field");
+
+    // Update email dynamically based on the entered username
+    usernameField.addEventListener('input', function() {
+      emailField.value = usernameField.value + '@mail.fake';
+    });
+  });
+</script>

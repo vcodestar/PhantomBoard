@@ -1,0 +1,117 @@
+<%= link_to new_post_path, id: "new-post-btn", data: { turbo_frame: "new_post_form" } do %>
+  <div id="add-new-post" class="post-instance">
+    <i class="fa-regular fa-square-plus"></i>
+    New post
+  </div>
+<% end %>
+
+<div id="posts">
+  <% @posts.each_with_index do |post, index| %>
+    <div class="post-instance" id="post-<%= post.id %>">
+        <%= render post %>
+
+
+
+      <div class="reactions">
+        <%= turbo_frame_tag "like_button_#{post.id}" do %>
+          <% if post.liked_users.include?(current_user) %>
+            <%= button_to post_like_path(post, post.likes.find_by(user: current_user)), 
+                          method: :delete, 
+                          class: "btn btn-link like-btn", 
+                          data: { turbo_stream: true } do %>
+              <i class="fa-solid fa-heart"></i>
+              <span class="comment-count"><%= post.likes.size %></span>
+            <% end %>
+          <% else %>
+            <%= button_to post_likes_path(post), 
+                          method: :post, 
+                          class: "btn btn-link like-btn", 
+                          data: { turbo_stream: true } do %>
+              <i class="fa-regular fa-heart"></i>
+              <span class="comment-count"><%= post.likes.size %></span>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <!-- Comment Icon with Comment Count -->
+        <button class="btn btn-link comment-toggle-btn" data-bs-toggle="collapse" data-bs-target="#collapse-<%= index %>">
+          <i class="fa-solid fa-comment-dots"></i>
+          <span id="comment-count-<%= post.id %>" class="comment-count"><%= post.comments.size %></span>
+        </button>
+      </div>
+
+      <!-- Accordion for Comments -->
+      <div class="accordion" id="accordion-<%= index %>">
+        <div class="accordion-item">
+          <div id="collapse-<%= index %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= index %>">
+            <div class="accordion-body">
+              <div id="comments-<%= post.id %>">
+                <% post.comments.order(created_at: :asc).limit(10).each do |comment| %>
+                  <div class="comment-wrapper" id="comment-<%= comment.id %>">
+                    <div class="comment-line">
+                      <div class="created-at">
+                        <%= link_to posts_user_path(comment.user), class: "username-link" do %>
+                          <strong><%= comment.user.username %></strong>
+                        <% end %>
+                        <p>
+                          <small><%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
+                        </p>
+                      </div>
+                      <!-- Ellipsis Dropdown Icon -->
+                      <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton-<%= comment.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <ul class="dropdown-menu comments-dropdown" aria-labelledby="dropdownMenuButton-<%= comment.id %>">
+                          <% if comment.user == current_user || current_user.admin?  %>
+                            <li><%= button_to "Delete", post_comment_path(post, comment), method: :delete, class: "dropdown-item", data: { confirm: "Are you sure?" } %></li>
+                          <% end %>
+                          <!-- Report Comment Button -->
+                          <%= turbo_frame_tag "report_comment_#{comment.id}" do %>
+                            <%= button_to "Report User", report_user_path(comment.user), method: :post, class: "dropdown-item", data: { turbo_frame: "report_comment_#{comment.id}" } %>
+                          <% end %>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Comment Content -->
+                    <div class="comment-content">
+                      <%= comment.content %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- "Show more" link always at the bottom -->
+              <% if post.comments.count > 10 %>
+                <div id="show-more-container-<%= post.id %>">
+                  <%= link_to post_path(post), class: "comment-wrapper", id: "show-more" do %>
+                    <span>Show more</span>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <!-- Turbo Frame for Comment Form -->
+              <% if user_signed_in? %>
+                <%= turbo_frame_tag "new_comment_#{post.id}" do %>
+                  <%= form_with(model: [post, Comment.new], local: false, id: "new-comment-form-#{post.id}") do |form| %>
+                    <div class="post-comment-wrapper">
+                      <%= form.text_area :content, class: "comment-textarea", placeholder: "Add a comment" %>
+                      <div class="button-container">
+                        <%= form.submit "Post Comment", class: "post-comment-btn btn btn-primary" %>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <p>You must be <%= link_to "logged in", new_user_session_path %> to comment.</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

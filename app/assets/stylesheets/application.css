@@ -1,0 +1,129 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+body {
+    background-color: #222831; 
+}
+
+.field_with_errors {
+    width: 100%;
+}
+
+i {
+    color: white;
+}
+
+.accordion-collapse {
+    border: none !important; /* Remove any borders */
+  }
+  
+  .accordion-body {
+    border: none !important; /* Remove borders inside the accordion */
+    outline: none !important; /* Remove focus outline */
+    box-shadow: none !important; /* Remove shadow, if any */
+}
+
+#logo-on-page {
+    height: 20vh;
+    width: 19vh;
+}
+
+.logo-class {
+    height: 7vh; /* Adjust to desired size */
+    width: 8vh;
+    margin-right: 1vh; /* Space between logo and text */
+    vertical-align: middle;
+}
+  
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.created-at {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5vh;
+}
+
+.created-at strong {
+    margin-right: 1vh;
+}
+
+.reactions {
+    margin-top: 2vh;
+}
+
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.about p {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.about a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.about a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+#scroll-to-bot {
+    position: fixed;
+    bottom: 1.5vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    height: 5vh;
+    width: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+#scroll-to-bot:hover {
+    background-color: #0056b3;
+}

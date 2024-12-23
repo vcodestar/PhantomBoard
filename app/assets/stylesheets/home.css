@@ -1,0 +1,360 @@
+.my-container {
+    margin-top: 3vh;
+    color: white;
+} 
+
+.post-instance {
+    background: #393e46; 
+    border-radius: 8px;
+    margin-bottom: 3vh;
+    padding: 3vh;
+    position: relative;
+}
+
+/************************************* EDIT USER **********************************/
+.fa-arrow-left {
+    font-size: 3.5vh;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 2vh;
+    transition: transform 0.3s, color 0.3s; 
+}
+
+.fa-arrow-left:hover {
+    transform: scale(1.2); 
+    color: #f0f0f0; 
+}
+
+#edit-user-header {
+    width: 100%;
+    max-width: 50vh; 
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+#edit-user-header .back-link {
+    display: flex; 
+    /* align-items: flex-start !important;  */
+    max-width: 5vh;
+    font-size: 1rem; 
+    text-decoration: none; 
+    color: #007bff; 
+}
+
+
+#edit-user-header h2 {
+    flex: 1; 
+    text-align: center; 
+    margin: 0; 
+}
+
+
+#edit-wrapper, #login-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important; 
+    border-radius: 8px !important;
+}
+
+#login-wrapper {
+    margin-top: 12vh;
+}
+
+#edit-wrapper form, #login-wrapper form, #cu-post-wrapper {
+    width: 100%; 
+    max-width: 50vh; 
+    padding: 20px;
+    border-radius: 8px;
+    background: #393e46; 
+    box-sizing: border-box; 
+}
+  
+#edit-wrapper .field, #login-wrapper .field {
+    margin-bottom: 1vh;
+}
+
+#edit-wrapper .actions {
+    margin-top: 1vh;
+}
+
+#edit-wrapper h2, #edit-wrapper h3, #login-wrapper h2, #login-wrapper h3 {
+    font-size: 1.5em;
+    margin-bottom: 1vh;
+}
+
+#edit-wrapper .field label, #login-wrapper .field label {
+    display: block;
+    margin-bottom: 1vh;
+    text-align: left;
+}
+
+#update-user-btn, #login-user-btn, #signup-user-btn {
+    margin-top: 2vh;
+}
+
+#shared-links {
+    margin-top: 2vh;
+}
+
+#sign-up-link, #login-link {
+    text-decoration: none;
+}
+
+#cancel-acc-header {
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
+#cancel-acc-wrapper {
+    margin: 3vh 0;
+    width: 100%; 
+    max-width: 50vh; 
+    padding: 1vh;
+    background: #393e46; 
+    border-radius: 8px !important;
+}
+
+#email-container, #password-container {
+    color: white;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1vh;
+    margin: 1vh 0;
+    border-radius: 5px;
+    background: #393e46;
+}
+
+#email-container i, #password-container i {
+    color: #888;
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+#email-container input, #password-container input {
+    background: none !important;
+    width: 100%; 
+    color: white;
+    text-align: center;
+}
+
+#email-container input:focus, #password-container input:focus {
+    background: none !important; 
+    color: white; 
+    outline: none; 
+}
+
+
+/*-----------------------------------------------------------------------*/
+
+
+/*----------------------------------------------- POST STYLE *******************************/
+
+.username-link {
+    color: white;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+  }
+  
+
+.comment-count {
+    color: white;
+    cursor: pointer;
+}
+
+.post-options-dropdown {
+    position: absolute; 
+    top: 1.5vh;          
+    right: 1.5vh;        
+}
+
+.like-btn {
+    background: none;
+    text-decoration: none;
+    outline: none;
+    border: none;
+}
+
+#add-new-post {
+    height: 21vh;
+    background: none;
+    border: 4px dashed #888; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: border-color 0.3s ease-in-out;
+}  
+
+#add-new-post:hover {
+    border-color: white;  /* Change border color to white on hover */
+    color: white;  /* Change text color to white on hover */
+}
+
+#add-new-post i, #new-post-btn {
+    color: #888;
+    transition: color 0.3s ease-in-out;
+}
+
+#add-new-post:hover i, #new-post-btn:hover {
+    color: white;  /* Change the color of the icon to white when hovered */
+}
+
+#add-new-post i {
+    font-size: 4.2rem;
+    margin-bottom: 1vh;
+}
+
+#new-post-btn {
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+
+    #add-new-post i {
+        font-size: 3.5rem;
+        margin-bottom: 0.5vh;
+    }
+
+    #new-post-btn {
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+}
+
+.post-instance .accordion-item, .post-instance .accordion-button {
+    background: #393e46 !important;
+    color: white;
+    border: none;
+}
+
+.comment-wrapper {
+    /* border: 1px solid red; */
+    background-color: #606977;
+    border-radius: 8px;
+    padding: 1vh;
+    margin-bottom: 2vh;
+}
+
+.comment-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-comment-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%; 
+}
+
+.post-comment-btn {
+    width: auto; 
+    padding: 0 1vh;
+    border-radius: 20px;
+    margin-top: 0.5vh;
+}
+
+.comment-textarea {
+    background: none;
+    color: white;
+    width: 100%; 
+    border-radius: 20px;
+    padding: 1vh;
+    overflow: hidden; /* Prevent scrollbars */
+    resize: none; /* Disable manual resizing */
+    align-items: center;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu {
+    background-color: #393e46;
+    color: white !important;
+}
+
+.dropdown-menu.comments-dropdown {
+    background-color: #606977 !important;
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    background-color: #2d3036;
+}
+
+.dropdown-menu.comments-dropdown .dropdown-item:hover {
+    background-color: #515863 !important; 
+}
+
+
+
+.comment-toggle-btn {
+    text-decoration: none; 
+    outline: none; 
+    border: none; 
+    background: none; 
+}
+  
+.comment-count {
+    margin-left: 5px; 
+    font-size: 0.9em; 
+    color: white; 
+    text-decoration: none;
+  }
+
+#show-more {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4f545f;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#show-more:hover {
+    background-color: #424650;
+}
+
+#show-more span{
+    text-decoration: none;
+    color: white;
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.reactions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.uc-submit-form {
+    margin-top: 2vh;
+}
+
+.uc-textarea-form {
+
+}
+
+/*-----------------------------------------------------------*******************************/
+

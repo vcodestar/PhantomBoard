@@ -1,0 +1,75 @@
+<div id="edit-wrapper">
+  <div id="edit-user-header">
+    <h2>Edit <%= resource_name.to_s.humanize %></h2>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- Hidden Email Field -->
+    <div id="email-container">
+      <!--<i class="fas fa-envelope"></i>-->
+      <%= f.hidden_field :email, id: "email-field", value: "" %>  <!-- This field is hidden, and its value will be updated dynamically -->
+    </div>
+
+    <!-- Username Field -->
+    <div id="password-container">
+      <i class="fas fa-user"></i>
+      <%= f.text_field :username, autofocus: false, autocomplete: "username", placeholder: "Enter your username", id: "username-field" %>  <!-- Username field will trigger email update -->
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <!-- New Password Field -->
+    <div id="password-container">
+      <i class="fas fa-lock"></i>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Enter new password" %>
+    </div>
+    <% if @minimum_password_length %>
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+    <br><i>(leave blank if you don't want to change it)</i>
+
+    <!-- Password Confirmation Field -->
+    <div id="password-container">
+      <i class="fas fa-lock"></i>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm new password" %>
+    </div>
+
+    <!-- Current Password Field -->
+    <div id="password-container">
+      <i class="fa-solid fa-key"></i>
+      <%= f.password_field :current_password, autocomplete: "current-password", required: true, placeholder: "Enter current password" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="actions">
+      <%= f.submit "Update", class: "btn btn-outline-primary ", id: "update-user-btn" %>
+    </div>
+  <% end %>
+
+  <!-- Cancel Account Section -->
+  <div id="cancel-acc-wrapper">
+    <div>Unhappy? 
+      <%= button_to "Cancel my account", registration_path(resource_name), 
+                    data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, 
+                    method: :delete, 
+                    class: "btn btn-outline-danger" %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const usernameField = document.getElementById("username-field");
+    const emailField = document.getElementById("email-field");
+
+    // Update email value based on the entered username
+    usernameField.addEventListener('input', function() {
+      // Dynamically set email as 'username@mail.fake'
+      emailField.value = usernameField.value + '@mail.fake';
+    });
+  });
+</script>

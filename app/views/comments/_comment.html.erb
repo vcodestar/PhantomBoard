@@ -1,0 +1,23 @@
+<div id="comment-<%= comment.id %>" class="comment-wrapper">
+  <div class="comment-line">
+    <%= link_to posts_user_path(comment.user), class: "username-link" do %>
+      <strong><%= comment.user&.username || "Anonymous" %></strong>
+    <% end %>
+
+    <div class="dropdown comment-dropdown">
+      <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton-<%= comment.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-<%= comment.id %>">
+        <% if comment.user == current_user %>
+          <%= button_to "Delete", post_comment_path(post, comment), method: :delete, remote: true, class: "dropdown-item", data: { confirm: "Are you sure?" } %>
+        <% end %>
+        <%= button_to "Report User", report_comment_path(comment), method: :post, class: "dropdown-item", data: { confirm: "Are you sure you want to report this comment?" } %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="comment-content">
+    <%= comment.content %>
+  </div>
+</div>

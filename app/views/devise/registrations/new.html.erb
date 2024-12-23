@@ -1,0 +1,51 @@
+<div id="login-wrapper">
+  <%= image_tag('logo-cap.png', alt: 'GhostPost Logo', class: 'logo-class', id: "logo-on-page") %>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <h2>Sign up</h2>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- Hidden email field (Initially empty) -->
+    <%= f.hidden_field :email, id: "email-field", value: "" %>
+
+    <div id="password-container">
+      <i class="fas fa-user"></i>
+      <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "Enter your username", id: "username-field" %>
+    </div>
+
+    <div id="password-container">
+      <i class="fas fa-lock"></i>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Enter new password" %>
+    </div>
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+
+    <div id="password-container">
+      <i class="fas fa-lock"></i>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up" , class: "btn btn-outline-primary ", id: "signup-user-btn"%>
+    </div>
+
+    <div id = "shared-links">
+      <%= render "devise/shared/links" %>
+    </div>
+  
+  <% end %>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const usernameField = document.getElementById("username-field");
+    const emailField = document.getElementById("email-field");
+
+    // Update email value based on the entered username
+    usernameField.addEventListener('input', function() {
+      emailField.value = usernameField.value + '@mail.fake';
+    });
+  });
+</script>

@@ -1,0 +1,5 @@
+// Remove the deleted comment from the DOM
+$('#comment-<%= @comment.id %>').remove();
+
+// Update the comment count
+$('#comment-count-<%= @post.id %>').text('<%= @post.comments.size %>');

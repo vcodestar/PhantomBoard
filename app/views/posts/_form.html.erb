@@ -1,0 +1,23 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.text_area :text, class: "comment-textarea", placeholder: "Whats on your mind?" %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="uc-submit-form">
+    <%= form.submit class: "btn btn-outline-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,143 @@
+<button id="scroll-to-bot"><i class="fa-solid fa-down-long"></i></button>
+<div class="post-instance" id="post-<%= @post.id %>">
+  <!-- Top-Right Dropdown for Post Actions -->
+  <div class="dropdown post-options-dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" id="postOptionsDropdown-<%= @post.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-solid fa-ellipsis-vertical"></i> <!-- Ellipsis icon -->
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="postOptionsDropdown-<%= @post.id %>">
+      <% if @post.user == current_user %>
+        <li><%= link_to "Edit Post", edit_post_path(@post), class: "dropdown-item" %></li>
+        <li><%= button_to "Delete Post", @post, method: :delete, remote: true, class: "dropdown-item", data: { confirm: "Are you sure you want to delete this post?" } %></li>
+      <% end %>
+      <!-- Report Post Button -->
+      <li>
+        <%= turbo_frame_tag "report_post_#{@post.id}" do %>
+          <%= button_to "Report User", report_user_path(@post.user), method: :post, class: "dropdown-item", data: { turbo_frame: "report_post_#{@post.id}" } %>
+        <% end %>      
+      </li>
+    </ul>
+  </div>
+
+  <!-- Render Post Content -->
+  <%= render @post %>
+
+  <!-- Reaction Icons -->
+  <div class="reactions">
+    <%= turbo_frame_tag "like_button_#{@post.id}" do %>
+      <% if @post.liked_users.include?(current_user) %>
+        <%= button_to post_like_path(@post, @post.likes.find_by(user: current_user)), 
+                      method: :delete, 
+                      class: "btn btn-link like-btn", 
+                      data: { turbo_stream: true } do %>
+          <i class="fa-solid fa-heart"></i>
+          <span class="comment-count"><%= @post.likes.size %></span>
+        <% end %>
+      <% else %>
+        <%= button_to post_likes_path(@post), 
+                      method: :post, 
+                      class: "btn btn-link like-btn", 
+                      data: { turbo_stream: true } do %>
+          <i class="fa-regular fa-heart"></i>
+          <span class="comment-count"><%= @post.likes.size %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+
+
+
+    <button class="btn btn-link comment-toggle-btn">
+      <i class="fa-solid fa-comment-dots"></i>
+      <span class="comment-count" id="comment-count-<%= @post.id %>"><%= @post.comments.size %></span>
+    </button>
+  </div>
+
+  <!-- Turbo Frame for Comments Section -->
+  <%= turbo_frame_tag "post_#{@post.id}_comments" do %>
+    <!-- Show All Comments -->
+    <div id="comments-<%= @post.id %>">
+      <% @post.comments.each do |comment| %>
+        <div id="comment-<%= comment.id %>" class="comment-wrapper">
+          <div class="comment-line">
+            <%= turbo_frame_tag "post_#{@post.id}_comments", data: { turbo: false } do %>
+              <%= link_to posts_user_path(comment.user), class: "username-link" do %>
+                <strong><%= comment.user.username || "Anonymous" %></strong>
+              <% end %>
+            <% end %>
+
+
+            <!-- Dropdown for Comment Actions -->
+            <div class="dropdown comment-dropdown">
+              <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton-<%= comment.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+              <ul class="dropdown-menu comments-dropdown" aria-labelledby="dropdownMenuButton-<%= comment.id %>">
+                <% if comment.user == current_user || current_user.admin? %>
+                  <li><%= button_to "Delete", post_comment_path(@post, comment), method: :delete, remote: true, class: "dropdown-item", data: { confirm: "Are you sure?" } %></li>
+                <% end %>
+                <!-- Report Comment Button -->
+                
+                <li>
+                  <%= turbo_frame_tag "report_post_#{@post.id}" do %>
+                    <%= button_to "Report User", report_user_path(comment.user), method: :post, class: "dropdown-item", data: { turbo_frame: "report_post_#{@post.id}" } %>
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Comment Content -->
+          <div class="comment-content">
+            <%= comment.content %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Turbo Frame for New Comment Form -->
+  <% if user_signed_in? %>
+    <%= turbo_frame_tag "new_comment_#{@post.id}" do %>
+      <%= form_with(model: [@post, Comment.new], local: false, id: "new-comment-form-#{@post.id}") do |form| %>
+        <div class="post-comment-wrapper">
+          <%= form.text_area :content, class: "comment-textarea", placeholder: "Add a comment" %>
+          <div class="button-container">
+            <%= form.submit "Post Comment", class: "post-comment-btn btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>You must be <%= link_to "logged in", new_user_session_path, class: "login-link" %> to comment.</p>
+  <% end %>
+</div>
+
+<script>
+  const scrollButton = document.getElementById('scroll-to-bot');
+
+  window.addEventListener('scroll', toggleButton);
+
+  function toggleButton() {
+    if (window.scrollY < document.body.scrollHeight / 2) {
+      scrollButton.innerHTML = '<i class="fa-solid fa-down-long"></i>';
+      scrollButton.onclick = () => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      };
+    } else {
+      scrollButton.innerHTML = '<i class="fa-solid fa-up-long"></i>';
+      scrollButton.onclick = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      };
+    }
+  }
+
+
+  toggleButton(); 
+</script>

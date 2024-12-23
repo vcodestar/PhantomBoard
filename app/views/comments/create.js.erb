@@ -1,0 +1,8 @@
+// Append the new comment to the comments list
+$("#comments-<%= @post.id %>").append("<%= j render @comment %>");
+
+// Clear the comment textarea
+$("#new-comment-form-<%= @post.id %> textarea").val("");
+
+// Update the comment count
+$("#comment-count-<%= @post.id %>").text("<%= @post.comments.size %>");
