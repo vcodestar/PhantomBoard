@@ -6,3 +6,4 @@ default: &default
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
+s
